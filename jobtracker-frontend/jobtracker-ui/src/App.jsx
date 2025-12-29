@@ -3,19 +3,10 @@ import axios from "axios";
 import AddJob from "./components/AddJob";
 import EditJob from "./components/EditJob";
 import SearchJobs from "./components/SearchJobs";
+import JobCard from "./components/JobCard";
 
 function App() {
   const [jobs, setJobs] = useState([]);
-
-  // Called when SearchJobs returns filtered data
-  const handleSearch = (filteredJobs) => {
-    // If search returns nothing (or reset), reload all jobs
-    if (!filteredJobs) {
-      fetchJobs();
-    } else {
-      setJobs(filteredJobs);
-    }
-  };
 
   // Fetch all jobs
   const fetchJobs = async () => {
@@ -27,11 +18,20 @@ function App() {
     }
   };
 
+  // Handle search result
+  const handleSearch = (filteredJobs) => {
+    if (!filteredJobs) {
+      fetchJobs(); // reset to all jobs
+    } else {
+      setJobs(filteredJobs);
+    }
+  };
+
   // Delete job
   const deleteJob = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/jobs/${id}`);
-      fetchJobs(); // refresh list
+      fetchJobs();
     } catch (error) {
       console.error("Error deleting job", error);
     }
@@ -52,21 +52,18 @@ function App() {
 
       <SearchJobs onSearch={handleSearch} />
 
-      <ul>
-        {jobs.length === 0 && <p>No jobs found</p>}
+      {jobs.length === 0 && <p>No jobs found</p>}
 
+      <div className="job-grid">
         {jobs.map((job) => (
-          <li key={job.id}>
-            {job.company} - {job.role} - {job.status}
-
-            <EditJob job={job} onUpdate={fetchJobs} />
-
-            <button onClick={() => deleteJob(job.id)}>
-              Delete
-            </button>
-          </li>
+          <JobCard
+            key={job.id}
+            job={job}
+            onDelete={deleteJob}
+            onUpdate={fetchJobs}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
