@@ -17,7 +17,7 @@ function SearchJobs({ onSearch }) {
       if (status.trim() !== "") params.status = status;
 
       const response = await axios.get(
-        "http://localhost:8080/jobs/search",
+        "https://job-tracker-7p3n.onrender.com/jobs/search",
         { params }
       );
 

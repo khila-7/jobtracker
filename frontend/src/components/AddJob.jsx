@@ -10,7 +10,7 @@ const AddJob = ({ onJobAdded }) => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:8080/jobs", {
+      await axios.post("https://job-tracker-7p3n.onrender.com/jobs", {
         company,
         role,
         status

@@ -9,7 +9,8 @@ function EditJob({ job, onUpdate }) {
 
   const updateJob = async () => {
     try {
-      await axios.put(`http://localhost:8080/jobs/${job.id}`, {
+      await axios.put(`https://job-tracker-7p3n.onrender.com
+/jobs/${job.id}`, {
         company,
         role,
         status,

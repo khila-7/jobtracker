@@ -30,7 +30,8 @@ function App() {
   // Delete job
   const deleteJob = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/jobs/${id}`);
+      await axios.delete(`https://job-tracker-7p3n.onrender.com/
+jobs/${id}`);
       fetchJobs();
     } catch (error) {
       console.error("Error deleting job", error);
